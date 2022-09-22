@@ -5,12 +5,38 @@
  */
 package proyectofinaltbd1;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 /**
  *
  * @author erica
  */
 public class FrameTransportista extends javax.swing.JFrame {
-
+  private static Connection con;
+    private static final String driver="com.mysql.cj.jdbc.Driver";
+    private static final String user="root";
+    private static final String pass="Papa1212_";
+    private static final String url="jdbc:mysql://127.0.0.1:3306/bdempresaenvios";
+    
+    public void conector() {
+        // Reseteamos a null la conexion a la bd
+        con=null;
+        try{
+            Class.forName(driver);
+            // Nos conectamos a la bd
+            con= (Connection) DriverManager.getConnection(url, user, pass);
+            // Si la conexion fue exitosa mostramos un mensaje de conexion exitosa
+            if (con!=null){
+               System.out.println("exitoso");
+            }
+        }
+        // Si la conexion NO fue exitosa mostramos un mensaje de error
+        catch (ClassNotFoundException | SQLException e){
+           System.out.println( e);
+        }
+    }
     /**
      * Creates new form FrameTransportista
      */
@@ -41,6 +67,11 @@ public class FrameTransportista extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
         jButton2.setText("Envios Pendientes");
         jButton2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -100,6 +131,11 @@ public class FrameTransportista extends javax.swing.JFrame {
         nf.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        conector();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
